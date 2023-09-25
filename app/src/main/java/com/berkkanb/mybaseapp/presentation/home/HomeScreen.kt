@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,7 +33,9 @@ fun HomeScreen(
     navigateToDetailScreen: (id: String) -> Unit
 ) {
 
-    val uiState by homeScreenViewModel.uiState.collectAsState()
+    val searchText by homeScreenViewModel.searchText.collectAsState()
+    val satelliteList by homeScreenViewModel.satelliteList.collectAsState()
+    val isSearching by homeScreenViewModel.isSearching.collectAsState()
 
     LazyColumn() {
         item {
@@ -41,15 +44,26 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 50.dp)
                     .padding(vertical = 20.dp),
-                value = "",
-                onValueChange = {},
+                value = searchText,
+                onValueChange = { homeScreenViewModel.onSearchTextChange(it) },
                 placeholder = {
                     Text(text = "Search")
                 }
             )
         }
-        items(uiState.satelliteList) { satellite ->
-            SatelliteItem(item = satellite, onClickItem = navigateToDetailScreen)
+        if (isSearching.not()) {
+            items(satelliteList) { satellite ->
+                SatelliteItem(item = satellite, onClickItem = navigateToDetailScreen)
+            }
+        } else {
+            item {
+                LinearProgressIndicator(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 50.dp)
+                        .padding(vertical = 20.dp)
+                )
+            }
         }
     }
 
