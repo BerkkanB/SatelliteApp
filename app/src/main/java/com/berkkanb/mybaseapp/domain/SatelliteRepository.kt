@@ -7,7 +7,7 @@ import com.berkkanb.mybaseapp.data.model.SatelliteUI
 interface SatelliteRepository {
     suspend fun getSatelliteList(): List<SatelliteUI>
 
-    suspend fun getSatelliteDetail(id: Int): List<SatelliteDetailUI>
+    suspend fun getSatelliteDetail(id: Int): SatelliteDetailUI?
 
     suspend fun getSatellitePositionList(id: Int): List<SatellitePositionUI>
 }
