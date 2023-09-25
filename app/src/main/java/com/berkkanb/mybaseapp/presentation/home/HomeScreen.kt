@@ -30,7 +30,7 @@ import com.berkkanb.mybaseapp.data.model.SatelliteUI
 @Composable
 fun HomeScreen(
     homeScreenViewModel: HomeScreenViewModel = hiltViewModel(),
-    navigateToDetailScreen: (id: String) -> Unit
+    navigateToDetailScreen: (id: String, title: String) -> Unit
 ) {
 
     val searchText by homeScreenViewModel.searchText.collectAsState()
@@ -72,7 +72,7 @@ fun HomeScreen(
 @Composable
 fun SatelliteItem(
     item: SatelliteUI,
-    onClickItem: (String) -> Unit
+    onClickItem: (String, String) -> Unit
 ) {
     val statusColor = if (item.active) Color.Green else Color.Red
     val statusTitle = if (item.active) "Active" else "Passive"
@@ -82,7 +82,7 @@ fun SatelliteItem(
             .fillMaxWidth()
             .padding(horizontal = 50.dp)
             .padding(vertical = 5.dp)
-            .clickable { onClickItem.invoke(item.id.toString()) },
+            .clickable { onClickItem.invoke(item.id.toString(), item.name) },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(

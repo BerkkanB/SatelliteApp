@@ -14,11 +14,18 @@ fun BaseNavHost() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = BaseNavGraph.HOME_GRAPH) {
         composable(BaseNavGraph.HOME_GRAPH) {
-            HomeScreen(navigateToDetailScreen={navController.navigate("${BaseNavGraph.DETAIL_GRAPH}/$it")})
+            HomeScreen(
+                navigateToDetailScreen = { id, title ->
+                    navController.navigate("${BaseNavGraph.DETAIL_GRAPH}/$id/$title")
+                }
+            )
         }
         composable(
-            "${BaseNavGraph.DETAIL_GRAPH}/{detailId}",
-            arguments = listOf(navArgument("detailId") { type = NavType.StringType })
+            "${BaseNavGraph.DETAIL_GRAPH}/{detailId}/{title}",
+            arguments = listOf(
+                navArgument("detailId") { type = NavType.StringType },
+                navArgument("title") { type = NavType.StringType }
+            )
         ) {
             DetailScreen()
         }

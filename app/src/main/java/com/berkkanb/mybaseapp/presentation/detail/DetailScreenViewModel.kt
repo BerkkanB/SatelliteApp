@@ -19,8 +19,9 @@ class DetailScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val detailId: String = checkNotNull(savedStateHandle["detailId"])
+    private val title: String = checkNotNull(savedStateHandle["title"])
 
-    private val _uiState = MutableStateFlow(DetailScreenUIState())
+    private val _uiState = MutableStateFlow(DetailScreenUIState(title = title))
     val uiState = _uiState.asStateFlow()
 
     init {
@@ -46,5 +47,6 @@ class DetailScreenViewModel @Inject constructor(
 
 data class DetailScreenUIState(
     val satelliteDetail: SatelliteDetailUI? = null,
-    val position: PositionUI? = null
+    val position: PositionUI? = null,
+    val title: String
 )

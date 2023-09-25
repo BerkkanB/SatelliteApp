@@ -24,7 +24,7 @@ fun DetailScreen(
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         uiState.satelliteDetail?.let {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = "TITLE", fontWeight = FontWeight.ExtraBold)
+                Text(text = uiState.title, fontWeight = FontWeight.ExtraBold)
                 Text(
                     text = it.firstFlight,
                     fontWeight = FontWeight.ExtraLight,
