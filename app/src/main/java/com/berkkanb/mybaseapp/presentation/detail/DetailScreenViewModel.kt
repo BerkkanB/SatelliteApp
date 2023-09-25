@@ -3,6 +3,7 @@ package com.berkkanb.mybaseapp.presentation.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.berkkanb.mybaseapp.data.model.PositionUI
 import com.berkkanb.mybaseapp.data.model.SatelliteDetailUI
 import com.berkkanb.mybaseapp.domain.SatelliteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class DetailScreenViewModel @Inject constructor(
     private val satelliteRepository: SatelliteRepository,
     savedStateHandle: SavedStateHandle
-): ViewModel() {
+) : ViewModel() {
     private val detailId: String = checkNotNull(savedStateHandle["detailId"])
 
     private val _uiState = MutableStateFlow(DetailScreenUIState())
@@ -24,14 +25,26 @@ class DetailScreenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            collectPositionData()
             val response = satelliteRepository.getSatelliteDetail(detailId.toInt())
             _uiState.update {
                 it.copy(satelliteDetail = response)
             }
         }
     }
+
+    private fun collectPositionData() {
+        viewModelScope.launch {
+            satelliteRepository.getSatellitePositionList(detailId.toInt()).collect { position ->
+                _uiState.update {
+                    it.copy(position = position)
+                }
+            }
+        }
+    }
 }
 
 data class DetailScreenUIState(
-    val satelliteDetail:SatelliteDetailUI?=null
+    val satelliteDetail: SatelliteDetailUI? = null,
+    val position: PositionUI? = null
 )

@@ -20,23 +20,29 @@ fun DetailScreen(
     detailScreenViewModel: DetailScreenViewModel = hiltViewModel(),
 ) {
     val uiState by detailScreenViewModel.uiState.collectAsState()
-    
+
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         uiState.satelliteDetail?.let {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = "TITLE", fontWeight = FontWeight.ExtraBold)
-                Text(text = it.firstFlight, fontWeight = FontWeight.ExtraLight, modifier = Modifier.padding(top = 16.dp))
+                Text(
+                    text = it.firstFlight,
+                    fontWeight = FontWeight.ExtraLight,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
                 Row(modifier = Modifier.padding(top = 36.dp)) {
                     Text(text = "Height/Mass:", fontWeight = FontWeight.Bold)
-                    Text(text = "${it.height/it.mass}")
+                    Text(text = "${it.height / it.mass}")
                 }
                 Row(modifier = Modifier.padding(top = 16.dp)) {
                     Text(text = "Cost:", fontWeight = FontWeight.Bold)
                     Text(text = it.costPerLaunch.toString())
                 }
-                Row(modifier = Modifier.padding(top = 16.dp)) {
-                    Text(text = "Last Position:", fontWeight = FontWeight.Bold)
-                    Text(text = "last pos")
+                uiState.position?.let {
+                    Row(modifier = Modifier.padding(top = 16.dp)) {
+                        Text(text = "Last Position:", fontWeight = FontWeight.Bold)
+                        Text(text = "${it.posX}/${it.posY}")
+                    }
                 }
             }
         }
