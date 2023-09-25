@@ -1,7 +1,7 @@
 package com.berkkanb.mybaseapp.data.repository
 
+import com.berkkanb.mybaseapp.data.mapper.SatelliteDetailEntityMapper
 import com.berkkanb.mybaseapp.data.model.PositionUI
-import com.berkkanb.mybaseapp.data.model.SatelliteDetailEntity
 import com.berkkanb.mybaseapp.data.model.SatelliteDetailUI
 import com.berkkanb.mybaseapp.data.model.SatellitePositionUI
 import com.berkkanb.mybaseapp.data.model.SatelliteUI
@@ -63,30 +63,4 @@ class SatelliteRepositoryImpl @Inject constructor(
             }
         }
     }
-}
-
-class SatelliteDetailEntityMapper @Inject constructor() {
-
-    fun convert(data: List<SatelliteDetailUI>): List<SatelliteDetailEntity> {
-        return data.map {
-            SatelliteDetailEntity(
-                it.id,
-                it.costPerLaunch,
-                it.firstFlight,
-                it.height,
-                it.mass
-            )
-        }
-    }
-
-    fun convert(data: SatelliteDetailEntity): SatelliteDetailUI {
-        return SatelliteDetailUI(
-            data.id,
-            data.costPerLaunch,
-            data.firstFlight,
-            data.height,
-            data.mass
-        )
-    }
-
 }
