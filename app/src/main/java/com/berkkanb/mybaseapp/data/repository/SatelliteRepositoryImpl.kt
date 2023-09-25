@@ -66,18 +66,6 @@ class SatelliteRepositoryImpl @Inject constructor(
 }
 
 class SatelliteDetailEntityMapper @Inject constructor() {
-    //TODO
-    /*fun convert(data: List<SatelliteDetailEntity>): List<SatelliteDetailUI> {
-        return data.map {
-            SatelliteDetailUI(
-                it.id,
-                it.costPerLaunch,
-                it.firstFlight,
-                it.height,
-                it.mass
-            )
-        }
-    }*/
 
     fun convert(data: List<SatelliteDetailUI>): List<SatelliteDetailEntity> {
         return data.map {
@@ -101,13 +89,4 @@ class SatelliteDetailEntityMapper @Inject constructor() {
         )
     }
 
-    fun convert(data: SatelliteDetailUI): SatelliteDetailEntity {
-        return SatelliteDetailEntity(
-            data.id,
-            data.costPerLaunch,
-            data.firstFlight,
-            data.height,
-            data.mass
-        )
-    }
 }
